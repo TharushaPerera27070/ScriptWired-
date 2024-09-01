@@ -1,0 +1,28 @@
+const articles = [
+    {
+      name: 'wolverine',
+      title: "You Don't Know WOLVERINE, Bub?!",
+      content: [
+        "James Howlett is born to wealthy parents John and Elizabeth Howlett in Alberta, Canada, and grows up in the late 19th century. As a child, he's frail and unhealthy due to his overactive mutant immune system and neglected by his mother, who's institutionalized following the death of her first son, John Jr., in 1897. James's mutant abilities are triggered when his father is shot by the Howlett groundskeeper Thomas Logan, whom he did not know was his real father. James kills Logan, slashes the face of Logan's son and his friend Dog, and leaves Alberta with a childhood friend, Rose O'Hara.",
+        "His healing abilities drive trauma from his memories, leaving him partially amnesiac. He and Rose find refuge at a British Columbia stone quarry, where Rose, claiming James is her cousin, gives his name as “Logan.” Within months, Logan’s powers  due to the environment around him. He becomes healthier and gains senses to rival those of an animal, but also becomes more violent. To divert some of this pent-up rage, Logan partakes in cage fights where his prowess earns him the nickname “Wolverine.” Though he accidentally killing Rose with his claws, and retreats into the woods where he lives as a feral beast, losing all of his former memories.",
+        "He later reenters society and travels the world, partaking in every major conflict of the 20th century (WWI, WWII, the Spanish Civil War, the Vietnam War) as a soldier, criminal, or mercenary for hire. This causes him to coin the phrase, 'I'm the best there is at what I do, but what I do best isn't very nice'.",
+        "While on the run from the law, he's abducted by the Canadian super-soldier program known as Weapon X, a program he had previously been a willing participant in during the early 1960s as an international operative of Team X. Logan is a prime candidate for this new iteration of Weapon X due to his incredibly fast healing and endurance, which allows Doctor Cornelius and his team to fuse adamantium to his skeleton. The experiment is successful and gives Logan more control over his berserker nature, but also wipes him of any residual memories lingering in his head.",
+        "When Bruce Banner, AKA Hulk, blunders his way into Canadian territory, Logan is mobilized against the green gargantuan. He’s also used to kill the entire population of a small town in a field test, but eventually breaks loose from his captors, slaying almost everyone at the Weapon X facility. Despite this, they retain his DNA and use it to create new mutants like Avery Connor and the clawed clone Laura Kinney, AKA X-23.",
+        "His real sense of belonging arrives when he joins the X-Men.",
+      ],
+    },
+    {
+        name: 'magneto',
+        title: "Magneto",
+        content: [
+          "Max Eisenhardt starts his life in a world amid mass turmoil and intolerance—Germany, World War II. He witnesses the worst the human race has to offer and while he survives, his family and his people are persecuted and torn apart. Upon the death of his parents and sister, he lands in Auschwitz where he reunites with his childhood crush, Magda. Growing to adulthood in the camp, Max continues to urge his fellow captives to fight for their freedom.",
+          "Eventually implementing a revolt against their Nazi tormentors, Max and Magda escape and flee to a small city where they marry and have a daughter, Anya. Caught in a house fire, the future Magneto’s mutant powers finally emerge as he tries to rescue his family, but due to the interference of angry authorities, Anya does not survive. Enraged, he lays waste to the onlookers causing Magda to flee, fearing the evil within him.",
+          "Max obtains forged documents to change his name to Erik Magnus Lehnsherr and settles in Israel where he befriends Charles Xavier, AKA Professor X. The two enjoy debating at length the prospects of a superhuman race before revealing their true identities to one another to thwart a Nazi criminal. The ordeal brings to light Charles and Erik’s vastly different stances on the matter of mutant rights and the two go their separate ways, each championing their ideals.",
+          "Among Earth’s most powerful mutants, Magneto’s abilities are essentially limitless. He can manipulate all forms of magnetism, summon force fields and shoot electromagnetic pulses that can disable electronic devices. He can assemble complex machinery in seconds and manipulate the iron in blood to take control of people’s actions. He has even shown power over forms of energy on the electromagnetic spectrum like visible light and gamma rays, though he rarely uses these abilities. On top of these gifts Magneto possesses genius level intelligence in multiple technical fields and genetic engineering. He is a brilliant tactician, a natural born leader and, though he rarely demonstrates it, a trained hand-to-hand combatant.",
+          "Professor Charles Xavier and the X-Men both claim the role of Magneto’s principal and longest standing foes; however, they do often find themselves on the same team. This holds true for other heroic groups like the Avengers, Fantastic Four, Defenders and Inhumans as well. Magneto has also had run-ins with Hydra and given his upbringing always remained their opposition. The entire United States Government also lands on the foe list—which makes sense considering the amount of times Magneto has threatened, destroyed, or held something hostage in an attempt to take control of the world at large.",
+        ],
+      },
+    // Add more articles here
+  ];
+  
+  export default articles;
