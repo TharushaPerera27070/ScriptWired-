@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';//use for request data from the back-end
 import articles from "./article-content";
 import NotFoundPage from "./not_found_page";
+import CommentsList from "../reusable components/comments_list";
 
 const ArticlePage = () => {
 
@@ -31,6 +32,9 @@ const ArticlePage = () => {
        {article.content.map((paragraph, i) => (
         <p key={i}>{paragraph}</p>
        ))}
+
+        <CommentsList comments={articleInfo.comments}/>
+
     </>
     );
 }
