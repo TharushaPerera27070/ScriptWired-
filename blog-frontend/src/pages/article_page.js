@@ -4,6 +4,7 @@ import axios from 'axios';//use for request data from the back-end
 import articles from "./article-content";
 import NotFoundPage from "./not_found_page";
 import CommentsList from "../reusable components/comments_list";
+import AddCommentForm from "../reusable components/add_comment_form";
 
 const ArticlePage = () => {
 
@@ -22,17 +23,29 @@ const ArticlePage = () => {
    
     const article = articles.find(article => article.name === articleId);
     
+    const addUpvote = async () => {
+        const response = await axios.put(`/api/articles/${articleId}/upvote`);
+        const updatedArticle = response.data;
+        setArticalInfo(updatedArticle);
+    }
+
     if(!article){
         return <NotFoundPage/>
     }
     return(
     <>
        <h1>{article.title}</h1>
+       <div className="upvotes-section">
+       <button onClick={addUpvote} >Upvote</button>
        <p>This article has {articleInfo.upvotes} upvote(s)</p>
+       </div>
        {article.content.map((paragraph, i) => (
         <p key={i}>{paragraph}</p>
        ))}
-
+         
+         <AddCommentForm
+          articleName={articleId}
+          onArticleUpdated={updatedArticle => setArticalInfo(updatedArticle)} />
         <CommentsList comments={articleInfo.comments}/>
 
     </>
