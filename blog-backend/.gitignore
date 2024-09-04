@@ -1,4 +1,5 @@
 node-modules
 mongo-db-data
 credentials.json
-build
+build copy
+.env

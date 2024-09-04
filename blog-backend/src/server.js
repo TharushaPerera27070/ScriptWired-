@@ -3,6 +3,7 @@ import { db, connectToDb} from './db.js';
 import fs from 'fs';
 import admin from 'firebase-admin';
 import path from 'path';
+import 'dotenv/config';
 
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +20,7 @@ const __dirname  = path.dirname(__filename);
 //     upvotes: 0,
 //     comments: [],
 // },
-// ];  ---Added this data to the mongodb database---
+// ]  ---Added this data to the mongodb database---
 
 const  credentials = JSON.parse(                          //---firebase admin package---
      fs.readFileSync('./credentials.json')
