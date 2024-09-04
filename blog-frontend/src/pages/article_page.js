@@ -9,21 +9,25 @@ import useUser from "../hooks/use_user";
 
 const ArticlePage = () => {
 
-    const [articleInfo, setArticalInfo] = useState({ upvotes: 0, comments:[] }); // =>
+    const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments:[], canUpvote: false  }); // =>
     const { articleId } = useParams();
+    const { canUpvote } = articleInfo;
 
     const { user, isLoading } = useUser();
 
     useEffect(() => {
-       const loadArticalInfo = async () => {
+       const loadArticleInfo = async () => {
         const token = user && await user.getIdToken();
         const headers = token ? { authtoken: token } : {};
-        const response = await axios.get(`/api/articles/${articleId}`,{ headers });
+        const response = await axios.get(`/api/articles/${articleId}`, { headers });
         const newArticleInfo = response.data;
-        setArticalInfo(newArticleInfo);  
+        setArticleInfo(newArticleInfo);  
        }
-        loadArticalInfo();
-    });                                                                          // <= back-end                         
+
+       if (isLoading){
+        loadArticleInfo();
+       }
+    }, [isLoading, user]);                                                                          // <= back-end                         
 
    
     const article = articles.find(article => article.name === articleId);
@@ -33,7 +37,7 @@ const ArticlePage = () => {
         const headers = token ? { authtoken: token } : {};
         const response = await axios.put(`/api/articles/${articleId}/upvote`, null, { headers });
         const updatedArticle = response.data;
-        setArticalInfo(updatedArticle);
+        setArticleInfo(updatedArticle);
     }
 
     if(!article){
@@ -44,7 +48,7 @@ const ArticlePage = () => {
        <h1>{article.title}</h1>
        <div className="upvotes-section">
         {user 
-            ?<button onClick={addUpvote} >Upvote</button>
+            ?<button onClick={addUpvote} >{canUpvote ? 'Upvote':'Already Upvoted'}</button>
             :<button>Log In to upvote</button> 
         }
        <p>This article has {articleInfo.upvotes} upvote(s)</p>
@@ -57,7 +61,7 @@ const ArticlePage = () => {
 
          ?<AddCommentForm
           articleName={articleId}
-          onArticleUpdated={updatedArticle => setArticalInfo(updatedArticle)} />
+          onArticleUpdated={updatedArticle => setArticleInfo(updatedArticle)} />
          :<button>Log In to add a comment</button>
         
         }

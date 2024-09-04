@@ -72,6 +72,7 @@ app.use((req, res, next) => {             //=>
 //Up Voting...
 app.put('/api/articles/:name/upvote', async(req, res) => {
     const { name } = req.params;
+    const { uid } = req.user;
     
     const article = await db.collection('articles').findOne({ name }); 
     
@@ -89,7 +90,7 @@ app.put('/api/articles/:name/upvote', async(req, res) => {
         const updatedArticle = await db.collection('articles').findOne({ name }); 
         res.json(updatedArticle);
     }else{
-        res.send('That article doesn\'t exist.');
+        res.status(404).send('That article doesn\'t exist.');
     }
 
 });
