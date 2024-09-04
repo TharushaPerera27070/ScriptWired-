@@ -27,15 +27,30 @@ admin.initializeApp({
 const app = express();
 app.use(express.json());
 
+app.use(async (req, res, next) => {                                //<=
+    const { authtoken } = req.headers;
 
+    if (authtoken) {
+        try{
+            req.user = await admin.auth().verifyIdToken(authtoken);
+        } catch (e) {
+            res.sendStatus(400);
+        }
+    }
+    next();
+});                                                               //=> Load user's information from the firebase
 
 
 app.get('/api/articles/:name', async(req, res) => { // :name is a URL parameter
     const { name } = req.params;               // --- for getting value of the URL parameter ---
+    const { uid }  = req.user;
 
     const article = await db.collection('articles').findOne({ name }); 
     
     if(article) {
+        const upvoteIds = article.upvoteIds || [];
+        article.canUpvote = uid && !upvoteIds.include(uid);
+        
         res.json(article); //---Use res.json instead of res.send because it's make sure that the correct headers are set on that response.---
     } else {
         res.sendStatus(404);
