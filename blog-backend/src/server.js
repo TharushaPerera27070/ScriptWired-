@@ -17,7 +17,7 @@ import admin from 'firebase-admin';
 // ];  ---Added this data to the mongodb database---
 
 const  credentials = JSON.parse(                          //---firebase admin package---
-     fs.readFileSync('../credentials.json')
+     fs.readFileSync('./credentials.json')
 );                                          
 admin.initializeApp({
      credential: admin.credential.cert(credentials),
@@ -34,9 +34,12 @@ app.use(async (req, res, next) => {                                //<=
         try{
             req.user = await admin.auth().verifyIdToken(authtoken);
         } catch (e) {
-            res.sendStatus(400);
+            return res.sendStatus(400);
         }
     }
+
+    req.user = req.user || {};
+
     next();
 });                                                               //=> Load user's information from the firebase
 
@@ -49,7 +52,7 @@ app.get('/api/articles/:name', async(req, res) => { // :name is a URL parameter
     
     if(article) {
         const upvoteIds = article.upvoteIds || [];
-        article.canUpvote = uid && !upvoteIds.include(uid);
+        article.canUpvote = uid && !upvoteIds.includes(uid);
 
         res.json(article); //---Use res.json instead of res.send because it's make sure that the correct headers are set on that response.---
     } else {
@@ -74,7 +77,7 @@ app.put('/api/articles/:name/upvote', async(req, res) => {
     
     if(article) {
         const upvoteIds = article.upvoteIds || [];
-        const canUpvote = uid && !upvoteIds.include(uid);
+        const canUpvote = uid && !upvoteIds.includes(uid);
     
         if (canUpvote) {
             await db.collection('articles').updateOne({ name }, {
