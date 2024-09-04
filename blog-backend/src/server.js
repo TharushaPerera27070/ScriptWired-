@@ -1,6 +1,7 @@
 import express from 'express';
 import { db, connectToDb} from './db.js';
-
+import fs from 'fs';
+import admin from 'firebase-admin';
 
 // let articlesInfo = [
 // {
@@ -15,8 +16,19 @@ import { db, connectToDb} from './db.js';
 // },
 // ];  ---Added this data to the mongodb database---
 
+const  credentials = JSON.parse(                          //---firebase admin package---
+     fs.readFileSync('../credentials.json')
+);                                          
+admin.initializeApp({
+     credential: admin.credential.cert(credentials),
+});
+
+
 const app = express();
 app.use(express.json());
+
+
+
 
 app.get('/api/articles/:name', async(req, res) => { // :name is a URL parameter
     const { name } = req.params;               // --- for getting value of the URL parameter ---
