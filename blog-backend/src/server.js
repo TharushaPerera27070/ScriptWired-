@@ -50,7 +50,7 @@ app.get('/api/articles/:name', async(req, res) => { // :name is a URL parameter
     if(article) {
         const upvoteIds = article.upvoteIds || [];
         article.canUpvote = uid && !upvoteIds.include(uid);
-        
+
         res.json(article); //---Use res.json instead of res.send because it's make sure that the correct headers are set on that response.---
     } else {
         res.sendStatus(404);
@@ -58,18 +58,33 @@ app.get('/api/articles/:name', async(req, res) => { // :name is a URL parameter
 
 });
 
+app.use((req, res, next) => {             //=>
+    if (req.user) {
+        next();
+    } else {
+        res.sendStatus(401);
+    }
+});                                       //<= This will make sure that user can't access to upvoting and commenting if they're not logged in
+
 //Up Voting...
 app.put('/api/articles/:name/upvote', async(req, res) => {
     const { name } = req.params;
-  
-    await db.collection('articles').updateOne({ name }, {
-        $inc: { upvotes: 1 }, //inc = increment
-    });
-
+    
     const article = await db.collection('articles').findOne({ name }); 
     
-    if(article){
-        res.json(article);
+    if(article) {
+        const upvoteIds = article.upvoteIds || [];
+        const canUpvote = uid && !upvoteIds.include(uid);
+    
+        if (canUpvote) {
+            await db.collection('articles').updateOne({ name }, {
+                $inc: { upvotes: 1 }, //inc = increment
+                $push: { upvoteIds: uid},
+            });
+        }    
+
+        const updatedArticle = await db.collection('articles').findOne({ name }); 
+        res.json(updatedArticle);
     }else{
         res.send('That article doesn\'t exist.');
     }
@@ -80,16 +95,16 @@ app.put('/api/articles/:name/upvote', async(req, res) => {
 //Commenting...
 app.post('/api/articles/:name/comments', async(req, res) => {
     const { name } = req.params;
-    const { postedBy, text } = req.body;
+    const { text } = req.body;
+    const { email } = req.user;
     
     await db.collection('articles').updateOne({ name }, {
-        $push: { comments: { postedBy, text}},//---This the way that we tell mongodb to add a new item to an array in it's sort of query object language---
+        $push: { comments: { postedBy: email, text}},//---This the way that we tell mongodb to add a new item to an array in it's sort of query object language---
 
     });
 
     const article = await db.collection('articles').findOne({ name });//Loading the updated article...
     
-
     if(article){
     res.json(article);
     }else{
